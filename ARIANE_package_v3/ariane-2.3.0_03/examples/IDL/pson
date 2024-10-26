@@ -1,0 +1,9 @@
+if N_ELEMENTS(psfile) eq 0 then begin psfile='idl'
+oldevice = !d.name
+oldfont = !p.font
+qsfile=psfile + '.ps'
+spawn,'test -f '+qsfile+' && /bin/rm '+ qsfile
+set_plot,'ps'
+
+device,filename=qsfile,/landscape,font_size=8,xoffset=1.5,yoffset=28.5,$
+ xsize=27,ysize=18,/color,bits_per_pixel=8

@@ -1,0 +1,111 @@
+&ARIANE 
+  key_roms       = .FALSE. ,
+  key_alltracers = .TRUE.,
+  mode           = 'qualitative',
+  forback        = 'forward',
+  bin            = 'nobin',
+  nmax           = 300000,
+  tunit          = 86400.,
+  ntfic          = 180,
+  key_approximatesigma=.FALSE.,
+/
+
+&QUALITATIVE
+  delta_t        = 86400.,
+  frequency      = 30,
+  nb_output      = 55,
+  mask           = .FALSE.,
+/
+
+&OPAPARAM
+  imt      = 36,
+  jmt      = 30,
+  kmt      = 31,
+  lmt      = 2,
+  key_periodic     = .FALSE.,
+  key_jfold        = .FALSE.,
+  key_computew     = .FALSE.,
+  key_partialsteps = .FALSE.,
+  key_sigma        = .FALSE.,
+  zsigma           =   2000.,
+/
+
+&ZONALCRT
+  c_dir_zo     = '../../data',
+  c_prefix_zo  = 'reduc_4Dfields.nc',
+  ind0_zo      = -1,
+  indn_zo      = -1,
+  maxsize_zo   = -1,
+  c_suffix_zo  = 'NONE',
+  nc_var_zo    = 'U',
+  nc_var_eivu  = 'NONE',
+  nc_att_mask_zo = 'NONE',
+/
+&MERIDCRT
+  c_dir_me     = '../../data',
+  c_prefix_me  = 'reduc_4Dfields.nc',
+  ind0_me      = -1,
+  indn_me      = -1,
+  maxsize_me   = -1,
+  c_suffix_me  = 'NONE',
+  nc_var_me    = 'V',
+  nc_var_eivv  = 'NONE',
+  nc_att_mask_me = 'NONE',
+/
+&VERTICRT
+  c_dir_ve     = '../../data',
+  c_prefix_ve  = 'reduc_4Dfields.nc',
+  ind0_ve      = -1,
+  indn_ve      = -1,
+  maxsize_ve   = -1,
+  c_suffix_ve  = 'NONE',
+  nc_var_ve    = 'W',
+  nc_var_eivw  = 'NONE',
+  nc_att_mask_ve = 'NONE',
+/
+&TEMPERAT
+  c_dir_te     = '../../data',
+  c_prefix_te  = 'reduc_4Dfields.nc',
+  ind0_te      = -1,
+  indn_te      = -1,
+  maxsize_te   = -1,
+  c_suffix_te  = 'NONE',
+  nc_var_te    = 'T',
+  nc_att_mask_te = 'NONE',
+/
+&SALINITY
+  c_dir_sa     = '../../data',
+  c_prefix_sa  = 'reduc_4Dfields.nc',
+  ind0_sa      = -1,
+  indn_sa      = -1,
+  maxsize_sa   = -1,
+  c_suffix_sa  = 'NONE',
+  nc_var_sa    = 'S',
+  nc_att_mask_sa = 'NONE',
+/
+&DENSITY
+  c_dir_de     = '../../data',
+  c_prefix_de  = 'reduc_4Dfields.nc',
+  ind0_de      = -1,
+  indn_de      = -1,
+  maxsize_de   = -1,
+  c_suffix_de  = 'NONE',
+  nc_var_de    = 'R',
+  nc_att_mask_de = 'NONE',
+/
+&MESH
+  dir_mesh     = '../../data', 
+  fn_mesh      = 'reduc_meshmask.nc', 
+  nc_var_xx_tt = 'xt', 
+  nc_var_xx_uu = 'xu', 
+  nc_var_yy_tt = 'yt',
+  nc_var_yy_vv = 'yv', 
+  nc_var_zz_ww = 'zw',
+  nc_var_e2u   = 'e2u', 
+  nc_var_e1v   = 'e1v', 
+  nc_var_e1t   = 'e1t', 
+  nc_var_e2t   = 'e2t', 
+  nc_var_e3t   = 'e3t',
+  nc_var_tmask = 'mt3d',
+  nc_mask_val  = 0.,
+/

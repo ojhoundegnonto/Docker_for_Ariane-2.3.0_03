@@ -1,0 +1,49 @@
+@
+@ -----------------------------------------------------------------------------
+@ this file defines the sections (initial or final) that encompass the domain
+@   of integration of the particles
+@ this domain must define a closed basin (maybe with the help of the model
+@   coastlines), no leakage allowed !
+@
+@ additional (hydrographical) information about initial particles must be added
+@   within the main program (function "criter0")
+@
+@ hydrographical information about the final state may be found in the output
+@   file "final_pos.qt". This information may be used to define a subset of
+@   indices (file "subset.qt") in order to perform a new (and more selective)
+@   experiment.
+@
+@ one line = one segment
+@ one section may be split into several segments (for a same isect)
+@ the initial section must correspond to isect=1
+@ a positive value (> 1) for isect refers to a true "final" section
+@ a negative value (< -1) for isect refers to a "transparent" section
+@ indices it1, it2, jt1, jt2, kt1, kt2 are for T points
+@ default initializations are on the eastern or northern face of T gridcells;
+@    negative indices (for it1 and it2, when it1=it2, or for jt1 and jt2, for
+@    jt1=jt2) inverse the convention
+@
+@     V.......V......V                              V
+@
+@     T   U   T   U  T    jt1=jt2>0             U   T   U      jt2
+@                                                       :
+@     V       V      V                              V   :
+@                                                       :
+@                                               U   T   U
+@    it1            it2                                 :
+@                                                   V   :
+@                                                       :
+@                                               U   T   U      jt1
+@
+@
+@                                                it1=it2>0
+@
+@
+@       isect   it1     it2     jt1     jt2     kt1     kt2     'name'
+@
+         1       17      28     -22     -22       1      31 "North1"
+         1        4      17     -26     -26       1      31 "North2"
+         1      -17     -17      22      26       1      31 "North3"
+         2       12      28       9       9       1      31 "South"
+         3      -29     -29       9      22       1      31 "East"
+         4        1      36       1      30       0       0 "Surface"

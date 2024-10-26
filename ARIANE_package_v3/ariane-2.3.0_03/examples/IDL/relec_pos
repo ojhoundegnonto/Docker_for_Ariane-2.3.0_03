@@ -1,0 +1,66 @@
+;dir='.'
+if n_elements(dir) eq 0 then begin dir='DATA'
+print,'lmt: ',lmt
+
+file=dir+'/final_pos.qt'
+
+;toto=READ_ASCII(file) & tab=toto.field1 & toto=0.
+;nn=n_elements(tab)/10.
+
+com='wc '+file+' | cut -c1-8' & spawn,com,dim & nn=float(dim(0))
+tab=dblarr(10,nn)
+openr,1,file & readf,1,tab & close,1
+
+hifin=tab(0,*) & hjfin=tab(1,*) & hkfin=tab(2,*) & hlfin=tab(3,*)
+tfin=tab(7,*) & sfin=tab(8,*) & rfin=tab(9,*)
+a=hifin-fix(hifin) & b=hjfin-fix(hjfin) & c=hkfin-fix(hkfin)
+xfin= (xp(fix(hifin)-1,0) lt  xp(fix(hifin),0)) *$
+ (   b  *(1.-a)*xp(fix(hifin)-1,fix(hjfin))+$
+     b  *   a  *xp(fix(hifin)  ,fix(hjfin))+$
+  (1.-b)*(1.-a)*xp(fix(hifin)-1,fix(hjfin)-1)+$
+  (1.-b)*   a  *xp(fix(hifin)  ,fix(hjfin)-1) )+$
+      (xp(fix(hifin)-1,0) ge  xp(fix(hifin),0)) *$
+ (   b  *(1.-a)*xp(fix(hifin)-1,fix(hjfin))+$
+     b  *   a  *(xp(fix(hifin)  ,fix(hjfin)))+$
+  (1.-b)*(1.-a)*xp(fix(hifin)-1,fix(hjfin)-1)+$
+  (1.-b)*   a  *(xp(fix(hifin)  ,fix(hjfin)-1)) )
+yfin=b  *(1.-a)*yp(fix(hifin)-1,fix(hjfin))+$
+     b  *   a  *yp(fix(hifin)  ,fix(hjfin))+$
+  (1.-b)*(1.-a)*yp(fix(hifin)-1,fix(hjfin)-1)+$
+  (1.-b)*   a  *yp(fix(hifin)  ,fix(hjfin)-1)
+zfin=(1.-c)*zw(fix(hkfin)-1)+c*zw(fix(hkfin))
+lfin=tab(3,*) & tr=tab(4,*)/lmt & idir=tab(6,*) & age=tab(5,*)
+
+file=dir+'/init_pos.qt'
+tub=dblarr(8,nn)
+;pour le cas ou le programme ne lit pas dans les fichiers init_pos.qt S,R,T
+;tub=dblarr(5,nn)
+openr,1,file & readf,1,tub & close,1
+hideb=tub(0,*) & hjdeb=tub(1,*) & hkdeb=tub(2,*) & hldeb=tub(3,*)
+tdeb=tub(5,*) & sdeb=tub(6,*) & rdeb=tub(7,*)
+a=hideb-fix(hideb) & b=hjdeb-fix(hjdeb) & c=hkdeb-fix(hkdeb)
+xdeb= (xp(fix(hideb)-1,0) lt  xp(fix(hideb),0)) *$
+ (   b  *(1.-a)*xp(fix(hideb)-1,fix(hjdeb))+$
+     b  *   a  *xp(fix(hideb)  ,fix(hjdeb))+$
+  (1.-b)*(1.-a)*xp(fix(hideb)-1,fix(hjdeb)-1)+$
+  (1.-b)*   a  *xp(fix(hideb)  ,fix(hjdeb)-1) )+$
+      (xp(fix(hideb)-1,0) ge  xp(fix(hideb),0)) *$
+ (   b  *(1.-a)*xp(fix(hideb)-1,fix(hjdeb))+$
+     b  *   a  *(xp(fix(hideb)  ,fix(hjdeb)))+$
+  (1.-b)*(1.-a)*xp(fix(hideb)-1,fix(hjdeb)-1)+$
+  (1.-b)*   a  *(xp(fix(hideb)  ,fix(hjdeb)-1)) )
+ydeb=b  *(1.-a)*yp(fix(hideb)-1,fix(hjdeb))+$
+     b  *   a  *yp(fix(hideb)  ,fix(hjdeb))+$
+  (1.-b)*(1.-a)*yp(fix(hideb)-1,fix(hjdeb)-1)+$
+  (1.-b)*   a  *yp(fix(hideb)  ,fix(hjdeb)-1)
+zdeb=(1.-c)*zw(fix(hkdeb)-1)+c*zw(fix(hkdeb))
+;ldeb=dblarr(nn)+1.
+
+;.run calsig
+;
+;rndeb=fltarr(nn,5) & rnfin=rndeb
+;
+;for ind=0,4 do begin print,ind & for n=0l,nn-1 do begin $
+; rndeb(n,ind)=sigma(ind*1000,sdeb(n),tdeb(n)) &$
+; rnfin(n,ind)=sigma(ind*1000,sfin(n),tfin(n))  
+;

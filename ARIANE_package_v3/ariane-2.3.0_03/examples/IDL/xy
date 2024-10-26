@@ -1,0 +1,54 @@
+;xmin=-80. & xmax=40 & ymin=-80 & ymax=40
+;xmin=100. & xmax=300 & ymin=-50 & ymax=40
+
+if n_elements(p) eq 0 then begin p=pmt
+if n_elements(del) eq 0 then begin del=1.
+
+print,'destination (p):',p
+print,'C.I. in Sv (del):',del
+
+if p eq 0 then tit='PSI(x,y): meanders around'+segname(pind(0))
+if p eq pmt then tit='PSI(x,y): all flow connected to'+segname(pind(0))
+if p ne 0 and p ne pmt then $
+ tit='PSI(x,y): '+segname(pind(0))+' to'+segname(pind(p))
+
+lev0=findgen(100)*del-50*del
+if lev0(0) le pmin(p) then begin $
+ ndel=fix((pmin(p)+del-lev0(0))/del) & lev0=lev0+ndel*del
+if lev0(99) ge pmax(p) then begin $
+ ndel=fix((-pmax(p)+del+lev0(99))/del) & lev0=lev0-ndel*del
+  
+if (2.*lev0(99)-lev0(88)) lt pmax(p) or $
+   (2.*lev0(0)-lev0(1)) gt pmin(p) then begin $
+ print,'psi too large for selected contours: ',(pmax(p)-pmin(p))/100.
+
+
+lev=lev0(where(lev0 ne 0))
+
+col0=!d.table_size-1 & col1=col0
+if imap ne 0 then begin col0=!d.table_size-2 & col1=col0/2. &$
+map_set,0,0,/mercator,/grid,/continent,/isotrop,$
+ E_CONTINENTS={FILL:1},limit=[range_y(0),range_x(0),range_y(1),range_x(1)]
+if imap eq 0 then begin $
+ contour,psi(*,*,0),xp,yp,/nodata,title=tit,$
+  subtitle='C.I. (in Sv) = '+string(del,format='(f5.2)'),$
+  xrange=range_x,yrange=range_y
+
+contour,psi(*,*,p),xp,yp,levels=lev,max_value=1.e5,/overplot,/follow,tri=tripxy
+contour,psi(*,*,p),xp,yp,levels=0,c_linestyle=1,thick=2,/overplot,/follow,$
+ tri=tripxy
+for j=0,jmt-1 do begin for i=0,imt-1 do begin if psi(i,j,p) lt 0 then begin $
+ plots,xp(i,j),yp(i,j),psym=3,noclip=0
+
+plots,!x.crange,[0,0],linestyle=3,noclip=0
+for lon=-360,360,180 do begin plots,[lon,lon],!y.crange,noclip=0,linestyle=3
+
+for j=0,jmt-1 do begin for i=0,imt-1 do begin if mtseg(i,j) eq 1 then begin $
+ plots,[xt(i,j),xt(i,j)],[yt(i,j),yt(i,j)],noclip=0,psym=4,symsize=.5
+  
+
+plots,xp(ip1,jp1),yp(ip1,jp1),psym=2
+;plots,xt(ii,jj),yt(ii,jj),psym=2,symsize=.3
+xyouts,xt(ii,jj),yt(ii,jj),'psi=0',size=1.,alignment=.5
+
+@msk

@@ -1,0 +1,4 @@
+!x.range=0 & !x.ticks=0 & !x.tickv=0 & !x.tickname='' & !x.minor=0 & !x.title='' & !x.style=1
+!y.range=0 & !y.ticks=0 & !y.tickv=0 & !y.tickname='' & !y.minor=0 & !y.title='' & !y.style=1
+!p.title='' & !p.subtitle='' & !p.multi=0
+

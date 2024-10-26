@@ -1,0 +1,102 @@
+&ARIANE 
+  key_sequential = .TRUE. ,
+  key_alltracers = .TRUE.,
+  mode           = 'quantitative',
+  forback        = 'forward',
+  bin            = 'nobin',
+  nmax           = 300000,
+  tunit          = 86400.,
+  ntfic          = 30,
+  key_approximatesigma=.FALSE.,
+  key_computesigma = .TRUE.,
+  zsigma           =   2000.,
+/
+&SEQUENTIAL
+  maxcycles      = 50
+/
+&QUANTITATIVE
+  key_eco        = .FALSE.,
+  key_reducmem   = .TRUE.,
+  key_unitm3     = .FALSE.,
+  key_nointerpolstats = .FALSE.,
+  max_transport  = 1.e9,
+/
+&OPAPARAM
+  imt      = 182,
+  jmt      = 149,
+  kmt      = 31,
+  lmt      = 12,
+  key_periodic     = .TRUE.,
+  key_jfold        = .TRUE.,
+  key_computew     = .FALSE.,
+  key_partialsteps = .FALSE.,
+/
+&ZONALCRT
+  c_dir_zo     = '../DATA/HLGM01',
+  c_prefix_zo  = 'HLGM01_SE_0201_210_grid_U.nc',
+  ind0_zo      = -1,
+  indn_zo      = -1,
+  maxsize_zo   = -1,
+  c_suffix_zo  = 'NONE',
+  nc_var_zo    = 'vozocrtx',
+  nc_var_eivu  = 'vozoeivu',
+  nc_att_mask_zo = 'missing_value',
+/
+&MERIDCRT
+  c_dir_me     = '../DATA/HLGM01',
+  c_prefix_me  = 'HLGM01_SE_0201_210_grid_V.nc',
+  ind0_me      = -1,
+  indn_me      = -1,
+  maxsize_me   = -1,
+  c_suffix_me  = 'NONE',
+  nc_var_me    = 'vomecrty',
+  nc_var_eivv  = 'vomeeivv',
+  nc_att_mask_me = 'missing_value',
+/
+&VERTICRT
+  c_dir_ve     = '../DATA/HLGM01',
+  c_prefix_ve  = 'HLGM01_SE_0201_210_grid_W.nc',
+  ind0_ve      = -1,
+  indn_ve      = -1,
+  maxsize_ve   = -1,
+  c_suffix_ve  = 'NONE',
+  nc_var_ve    = 'vovecrtz',
+  nc_var_eivw  = 'voveeivw',
+  nc_att_mask_ve = 'missing_value',
+/
+&TEMPERAT
+  c_dir_te     = '../DATA/HLGM01',
+  c_prefix_te  = 'HLGM01_SE_0201_210_grid_T.nc',
+  ind0_te      = -1,
+  indn_te      = -1,
+  maxsize_te   = -1,
+  c_suffix_te  = 'NONE',
+  nc_var_te    = 'votemper',
+  nc_att_mask_te = 'missing_value',
+/
+&SALINITY
+  c_dir_sa     = '../DATA/HLGM01',
+  c_prefix_sa  = 'HLGM01_SE_0201_210_grid_T.nc',
+  ind0_sa      = -1,
+  indn_sa      = -1,
+  maxsize_sa   = -1,
+  c_suffix_sa  = 'NONE',
+  nc_var_sa    = 'vosaline',
+  nc_att_mask_sa = 'missing_value',
+/
+&MESH
+  dir_mesh     = '../DATA/HLGM01', 
+  fn_mesh      = 'meshmask_HLGM01.nc', 
+  nc_var_xx_tt = 'glamt', 
+  nc_var_xx_uu = 'glamu',  
+  nc_var_yy_tt = 'gphit', 
+  nc_var_yy_vv = 'gphiv', 
+  nc_var_zz_ww = 'gdepw',
+  nc_var_e2u   = 'e2u', 
+  nc_var_e1v   = 'e1v', 
+  nc_var_e1t   = 'e1t', 
+  nc_var_e2t   = 'e2t', 
+  nc_var_e3t   = 'e3t',
+  nc_var_tmask = 'tmask',
+  nc_mask_val  = 0.,
+/

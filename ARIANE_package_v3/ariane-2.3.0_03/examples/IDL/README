@@ -1,0 +1,41 @@
+Mass streamfunctions with IDL (QUANTITATIVE analysis):
+
+@grid
+	(you may want to adjust some paths and parameters)
+
+dir='/home2/.../EXPER01'
+	(to modify the directory of the QUANTITATIVE Lagrangian experiment)
+
+@xy0
+	(interative selection of reference value (0) for psi)
+
+del=1.
+	(contour interval)
+
+@xy
+	(plot)
+
+del=5
+
+@xy
+
+...
+
+
+o
+
+Plot of individual trajectoires:
+
+dir='/home2/.../EXPER00'
+	(to modify the directory of the QUALITATIVE Lagrangian experiment)
+
+@trace0
+	(to read the content of file traj.ql)
+
+@trace1
+
+@trace2
+
+@trace3
+
+...

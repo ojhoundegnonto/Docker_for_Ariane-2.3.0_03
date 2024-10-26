@@ -1,0 +1,31 @@
+!!!!!!!!!!!!!!!!!!!!!!!!
+!!! NCO is required !!!!
+!!!!!!!!!!!!!!!!!!!!!!!!
+-- http://nco.sourceforge.net/nco.html --
+
+Example:
+-------
+
+How to change the global attribut 'dir_mesh' (OPA/NEMO outputs) which is the directory where the grid is stored :
+
+$> ncdump -h ariane_positions_quantitative.nc
+  ...
+               :dir_mesh = "/export/home7/clique/ORCA025-G70/ARCTIC_MEAN/GRID" ;
+  ...
+$> ncatted -O -a dir_mesh,global,m,c,"/local/tmp/2/grima/CLIQUE/Matlab" ariane_positions_quantitative.nc
+$> ncdump -h ariane_positions_quantitative.nc
+  ...
+               :dir_mesh = "/local/tmp/2/grima/CLIQUE/Matlab" ;
+  ...
+
+$> ncatted -O -a dir_mesh,global,m,c,"/local/tmp/2/grima/CLIQUE/Matlab" ariane_statistics_quantitative.nc
+
+Easy isn't it ?
+
+Note :
+----
+Replace : 'dir_mesh' by 'dir_grd_roms' for ROMS outputs
+
+---------------------------
+Nicolas.Grima@univ-brest.fr
+August 2008

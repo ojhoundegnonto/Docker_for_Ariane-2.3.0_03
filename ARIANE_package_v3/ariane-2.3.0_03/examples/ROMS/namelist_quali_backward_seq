@@ -1,0 +1,96 @@
+&ARIANE 
+  key_roms       = .TRUE. ,
+  key_alltracers = .TRUE.,
+  key_sequential = .TRUE.,
+  mode           = 'qualitative',
+  forback        = 'backward',
+  bin            = 'bin',
+  nmax           = 300000,
+  tunit          = 86400.,
+  ntfic          = 30,
+  key_approximatesigma=.FALSE.,
+/
+&SEQUENTIAL
+  maxcycles = 30,
+/
+&QUALITATIVE
+  delta_t   = 86400.,
+  frequency = 1,
+  nb_output = 12,
+  mask      = .FALSE.,
+/
+&ROMSPARAM
+  xi_rho   =91,
+  eta_rho  =106,
+  s_w      =33,
+  time     =12,
+/
+&ZONALCRT
+  c_dir_zo     = '../DATA',
+  c_prefix_zo  = 'roms_avg_Y11_',
+  ind0_zo      = 01,
+  indn_zo      = 12,
+  maxsize_zo   = 2,
+  c_suffix_zo  = '.nc',
+  nc_var_zo    = 'u',
+  nc_att_mask_zo = 'NONE',
+/
+&MERIDCRT
+  c_dir_me     = '../DATA',
+  c_prefix_me  = 'roms_avg_Y11_',
+  ind0_me      = 01,
+  indn_me      = 12,
+  maxsize_me   = 2,
+  c_suffix_me  = '.nc',
+  nc_var_me    = 'v',
+  nc_att_mask_me = 'NONE',
+/
+&TEMPERAT
+  c_dir_te     = '../DATA',
+  c_prefix_te  = 'roms_avg_Y11_',
+  ind0_te      = 01,
+  indn_te      = 12,
+  maxsize_te   = 2,
+  c_suffix_te  = '.nc',
+  nc_var_te    = 'temp',
+  nc_att_mask_te = 'NONE',
+/
+&SALINITY
+  c_dir_sa     = '../DATA',
+  c_prefix_sa  = 'roms_avg_Y11_',
+  ind0_sa      = 01,
+  indn_sa      = 12,
+  maxsize_sa   = 2,
+  c_suffix_sa  = '.nc',
+  nc_var_sa    = 'salt',
+  nc_att_mask_sa = 'NONE',
+/
+&ZETA
+  c_dir_ze     = '../DATA',
+  c_prefix_ze  = 'roms_avg_Y11_',
+  ind0_ze      = 01,
+  indn_ze      = 12,
+  maxsize_ze   = 2,
+  c_suffix_ze  = '.nc',
+  nc_var_ze    = 'zeta',
+  nc_att_mask_ze = 'NONE',
+/
+&GLOBALATT
+  dir_glbatt           = '/net/persee/local/tmp/2/duarte/Benguela/Agulhas/mean',
+  fn_glbatt            = 'roms_avg_Y11M1.nc',
+  nc_glbatt_hc         = 'hc',
+  nc_glbatt_sc_w       = 'sc_w',
+  nc_glbatt_Cs_w       = 'Cs_w',
+/
+&GRDROMS
+  dir_grd_roms         = '../DATA', 
+  fn_grd_roms          = 'roms_grd.nc', 
+  nc_var_lon_rho_roms  = 'lon_rho', 
+  nc_var_lon_u_roms    = 'lon_u', 
+  nc_var_lat_rho_roms  = 'lat_rho',
+  nc_var_lat_v_roms    = 'lat_v', 
+  nc_var_pm_roms       = 'pm', 
+  nc_var_pn_roms       = 'pn', 
+  nc_var_h_roms        = 'h',
+  nc_var_mask_rho_roms = 'mask_rho',
+/

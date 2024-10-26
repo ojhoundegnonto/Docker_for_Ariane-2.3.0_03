@@ -1,0 +1,40 @@
+!p.charthick=1.5 & !p.charsize=1.5 & !p.title=''
+!p.position=[.11,.13,.98,.18]
+!p.subtitle='Lagrangian integrations'+string(' (max:  ',fix(tmax),' cycles)',$
+ format='(a7,i4,a9)')
+
+nmax2=nmax & nmin2=nmin
+if nmax le 2 then begin nmin2=0 & nmax2=nmax+1
+
+!x.title='PARTICLES (index)' & !y.title=''
+!x.range=[nmin2,nmax2] & !x.tickname='' & !x.tickv=0 & !x.ticks=0
+!y.range=[0,2] & !y.tickname='' & !y.tickv=0 & !y.ticks=0
+
+plot,[0,0],[0,0],/nodata,ystyle=4
+for i=0,200 do begin xx=nmax2+(nmin2-nmax2)*i/200. & e=(nmin2-nmax2)/398. &$
+ polyfill,[xx-e,xx-e,xx+e,xx+e,xx-e],[0,2,2,0,0],col=maxp-i*rgp/200.
+plots,[nmax2,nmax2,nmin2,nmin2,nmax2],[0,2,2,0,0],thick=3
+
+!p.position=[.11,.28,.98,.92]
+!p.title='3D STREAMLINES'
+!p.subtitle='' & !p.charthick=1.5 & !p.charsize=1.5
+
+!x.range=[xmin,xmax] & !x.style=1 & !x.title='LONGITUDE'
+!x.ticks=0 & !x.tickv=0 & !x.minor=0 & !x.tickname=''
+
+!y.range=[ymin,ymax] & !y.style=1 & !y.title='LATITUDE'
+!y.ticks=0 & !y.tickv=0 & !y.minor=0 & !y.tickname=''
+
+plot,[0,0],[0,0],/nodata,/noerase & plots,!x.range,[0,0],linestyle=3,noclip=0
+plots,[180,180],[-90,90],linestyle=3,noclip=0
+plots,[0,0],[-90,90],linestyle=3,noclip=0
+
+col=maxp+(n-nmax2)*rgp/(nmax2-nmin2)
+
+x0=x(where(n eq 0)) & y0=y(where(n eq 0))
+plots,x0,y0,psym=3,color=!p.color,noclip=0
+
+for p=1,max(n) do begin $
+ x0=x(where(n eq p)) & y0=y(where(n eq p)) & c0=col(where(n eq p)) &$
+ plots,x0,y0,psym=4,symsize=0.1,color=c0,noclip=0
+

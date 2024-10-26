@@ -1,0 +1,40 @@
+@
+@ -----------------------------------------------------------------------------
+@ one line = one initial position
+@
+@ all positioning indices are real and related to the VELOCITY grid
+@
+@ index gl is a time index (for time-dependent velocity arrays);
+@ examples:
+@    use gl=1.000 for a constant-in-time velocity field
+@    use gl=4.500 for a initializing a particle on April 30th, for a monthly
+@      climatological velocity field
+@
+@ a negative vertical index imposes constant-depth calculations (as a buoy)
+@
+@ the variable "transport" is not used by the program, but must be initialized !
+@
+@   |
+@   W______kw1
+@   |                                 V_________ jv2=1+jv1
+@   *____________gk                   |
+@   |                                 |
+@   T______kt=kw1                     |
+@   |                           U     T_____U____ jt=1+jv1
+@   |                           |     |     |
+@   |                           |     |   *_|_______gj
+@   W______kw2=1+kw1            |     |   | |
+@   |                           |     V___|_|____ jv1
+@                               |     |   | |
+@     kw1 <= gk < 1+kw1=kw2     |     |   | |
+@                               |     |   | |             iu1 <= gi < 1+iu1=iu2
+@                              iu1   it   | iu2           jv1 <= gj < 1+jv1=jv2
+@                                  =1+iu1 | =1+iu1
+@                                         |
+@                                         gi
+@
+@       gi      gj      gk      gl      transport
+@
+      29.500  13.000   5.500  1.000    1.0
+      29.500  13.000   6.500  1.000    1.0
+      29.500  13.000   7.500  1.000    1.0

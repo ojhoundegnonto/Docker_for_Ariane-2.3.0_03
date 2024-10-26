@@ -1,0 +1,83 @@
+if n_elements(dir) eq 0 then begin dir='.'
+
+print,'reading transport fields...'
+
+fileu=dir+'/xy_zonal_flx.qt'
+filev=dir+'/xy_meridional_flx.qt'
+
+print,'directory: ',dir
+
+data=READ_BINARY(fileu,endian='big')
+pmt=fix(.5+float(n_elements(data)/float(long(imt)*long(jmt))/8.))
+
+xy=dblarr(imt,jmt,pmt)
+uxy=fltarr(imt,jmt,pmt+1) & vxy=fltarr(imt,jmt,pmt+1)
+
+!y.title='LATITUDE' & !x.title='LONGITUDE'
+
+openr,1,dir+'/xy_zonal_flx.qt',/f77_unformatted,/swap_if_big_endian & readu,1,xy
+if iperio eq 1 then begin $
+ xy(0,*,*)=xy(0,*,*)+xy(imt-2,*,*) & xy(imt-2,*,*)=xy(0,*,*) &$
+ xy(1,*,*)=xy(1,*,*)+xy(imt-1,*,*) & xy(imt-1,*,*)=xy(1,*,*)
+if jperio eq 1 then begin for i=0,imt/2-1 do begin $
+ xy(i,jmt-3,*)=xy(i,jmt-3,*)-xy(imt-i-1,jmt-1,*) &$
+  xy(imt-i-1,jmt-1,*)=-xy(i,jmt-3,*) &$
+ xy(i,jmt-2,*)=xy(i,jmt-2,*)-xy(imt-i-1,jmt-2,*) &$
+  xy(imt-i-1,jmt-2,*)=-xy(i,jmt-2,*) &$
+ xy(i,jmt-1,*)=xy(i,jmt-1,*)-xy(imt-i-1,jmt-3,*) &$
+  xy(imt-i-1,jmt-3,*)=-xy(i,jmt-1,*)
+uxy(*,*,0:pmt-1)=xy
+close,1
+openr,1,dir+'/xy_meridional_flx.qt',/f77_unformatted,/swap_if_big_endian & readu,1,xy
+if iperio eq 1 then begin $
+ xy(0,*,*)=xy(0,*,*)+xy(imt-2,*,*) & xy(imt-2,*,*)=xy(0,*,*) &$
+ xy(1,*,*)=xy(1,*,*)+xy(imt-1,*,*) & xy(imt-1,*,*)=xy(1,*,*)
+if jperio eq 1 then begin for i=1,imt/2-1 do begin $
+ xy(i,jmt-4,*)=xy(i,jmt-4,*)-xy(imt-i,jmt-1,*) &$
+  xy(imt-i,jmt-1,*)=-xy(i,jmt-4,*) &$
+ xy(i,jmt-3,*)=xy(i,jmt-3,*)-xy(imt-i,jmt-2,*) &$
+  xy(imt-i,jmt-2,*)=-xy(i,jmt-3,*) &$
+ xy(i,jmt-2,*)=xy(i,jmt-2,*)-xy(imt-i,jmt-3,*) &$
+  xy(imt-i,jmt-3,*)=-xy(i,jmt-2,*) &$
+ xy(i,jmt-1,*)=xy(i,jmt-1,*)-xy(imt-i,jmt-4,*) &$
+  xy(imt-i,jmt-4,*)=-xy(i,jmt-1,*)
+vxy(*,*,0:pmt-1)=xy
+close,1
+
+; ATTENTION: on n'elimine pas ici les meandres du total
+for j=0,jmt-1 do begin for i=0,imt-1 do begin $
+ uxy(i,j,pmt)=total(uxy(i,j,0:pmt-1)) & vxy(i,j,pmt)=total(vxy(i,j,0:pmt-1))
+
+print,'reading param0...'
+file=dir+'/param0'
+com='grep -vh "^@" '+file+' | wc -l | cut -c1-8' & spawn,com,dim
+nseg=fix(dim(0))-8
+
+i1=intarr(nseg) & i2=i1 & j1=i1 & j2=j1 & segind=i1 & segname=strarr(nseg)
+i10=0 & i20=0 & ind=0 & j10=0 & j20=0 & k10=0 & k20=0 & sname=' ' & segor=i1
+openr,1,dir+'/param0'
+for is=0,7 do begin readf,1,sname
+for is=0,nseg-1 do begin readf,1,ind,i10,i20,j10,j20,k10,k20,sname &$
+ i1(is)=abs(i10)-1 & i2(is)=abs(i20)-1 & segind(is)=ind &$
+ j1(is)=abs(j10)-1 & j2(is)=abs(j20)-1 & segname(is)=sname &$
+ if i10 lt 0 or j10 lt 0 then segor(is)=-1
+close,1
+
+pind=intarr(pmt+1)
+for ind=0,pmt-1 do begin toto=min(abs(segind-ind),iii) & pind(ind)=iii
+pind(pmt)=pmt
+
+mt2=mt & mtseg=mt*0
+for is=0,nseg-1 do begin $
+ if segind(is) gt 0 and i1(is) eq i2(is) then begin $
+  for j=j1(is),j2(is) do begin if mt(i1(is),j) eq 1 then begin $
+   mt2(i1(is),j)=0 & mtseg(i1(is),j)=1
+for is=0,nseg-1 do begin $
+ if segind(is) gt 0 and j1(is) eq j2(is) then begin $
+  for i=i1(is),i2(is) do begin if mt(i,j1(is)) eq 1 then begin $
+   mt2(i,j1(is))=0 & mtseg(i,j1(is))=1
+
+.run psi0.pro
+.run calpsi.pro
+
+;@xy

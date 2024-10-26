@@ -1,0 +1,10 @@
+if N_ELEMENTS(psfile) eq 0 then begin psfile='idl'
+oldevice = !d.name
+oldfont = !p.font
+qsfile=psfile + '.ps'
+spawn,'test -f '+qsfile+' && /bin/rm '+ qsfile
+set_plot,'ps'
+
+device,filename=qsfile,/portrait,font_size=8,xoffset=1.5,yoffset=1.5,$
+ xsize=18,ysize=27,/color
+

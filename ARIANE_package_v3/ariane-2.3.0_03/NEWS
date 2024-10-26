@@ -1,0 +1,12 @@
+ Date         : News
+--------------------------------------------------------------------
+ 2007         : Ariane outputs in Netcdf format.
+                CeCILL license.
+                A new version of Ariane reading input in sequential 
+                mode is starting .(NG)
+ 2008         : Matlab routines to visualize Ariane outputs.
+                Web pages to write easely Ariane's namelist file
+ 2009         : Interpolation from B to C grid (MOM)
+--------------------------------------------------------------------
+BB: Bruno.Blanke@univ-brest.fr
+NG: Nicolas.Grima@univ-brest.fr

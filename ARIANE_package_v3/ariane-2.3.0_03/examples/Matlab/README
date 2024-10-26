@@ -1,0 +1,160 @@
+
+=========================================
+== http://www.univ-brest.fr/lpo/ariane ==
+=========================================
+
+These Matlab routines come without garanty of results.
+They are available in the Ariane package just to help the
+Ariane users to create their own Matlab routines to plot 
+lagangian diagnostics.
+However these Matlab routines have been tested 
+on OPA/NEMO, ROMS and Symphonie Ariane outputs.
+<-adding-> NG january 2019: routines are adapted to Mars3d specifications.
+
+They have been developped and tested with Matlab 7
+on Linux platform.
+<-adding-> NG january 2019: tested with Matlab 2016b.
+
+===========
+= WARNING =
+===========
+Sometimes Matlab plots on screen are incomplet.
+Please, before to say that these routines don't work,
+verify the plot save in the *.tif or *.jpeg file.
+
+=============
+= IMPORTANT =
+=============
+1/ m_map has to be intalled to use these matlab routines.
+   ------- http://www.eos.ubc.ca/~rich/map.html -------
+<-adding-> NG january 2019: don't forget to also download and install ETOOPO2 and GSHHS!
+
+2/ You can change the projection before to submit:
+    - a_mask_land
+    - a_psi family routines
+    - a_scat family routines
+    - a_traj family routines
+
+   By default the projection is 'mercator', but you can select:
+    - projection='mercator'
+    - projection='stereographic'
+    - projection='lamber'
+    - projection='oblique'
+    - projection='miller'
+    - projection='UMT'  (doesn't work !!!)
+    - projection='hammer'
+
+3/ Read "HOWTO_change_attributs.txt" to know how to change 
+   a global attribut in a netcdf file. It could be needed 
+   when the file directories are not the same than during 
+   the computing. --- NCO is required ---
+
+================
+= QUANTITATIVE =
+================
+a_mask_land: qualitative - quantitative
+    Plot the masked region.
+
+a_diag_ts:
+    Plot TS diagram at the initial and final position
+    %% You can change number of the bins by a_bins
+    %% ex.:>> a_bins=50.;
+
+a_psi:
+    Plot the stream function psi.
+    %% You can set "a_cstep" to specify the LevelStep contour
+    %% You can set "a_title" to add a comment in the title
+
+a_psi_salt:
+    Plot the stream function psi and in the background the salinity.
+    It could take a long time to plot.
+    %% You can set "min_transport" to plot only salinity values
+    %% which have transport >= min_transport. 
+
+a_psi_temp:
+    Plot the stream function psi and in the background the temperature.
+    It could take a long time to plot.
+    %% You can set "min_transport" to plot only temperature values
+    %% which have transport >= min_transport.
+
+a_psi_dens:
+    Plot the stream function psi and in the background the density.
+    It could take a long time to plot.
+    %% You can set "min_transport" to plot only density values
+    %% which have transport >= min_transport.
+
+a_psi_depth:
+    Plot the stream function psi and in the background the depth.
+    It could take a long time to plot.
+    %% You can set "min_transport" to plot only depth values %%
+    %% which have transport >= min_transport.
+
+a_water_mass_trans:
+   Compare the histograms of the temperature and salinity
+   at the inital and final positions.
+
+================
+= QUALITATIVE =
+================
+a_mask_land: qualitative - quantitative
+    Plot the masked region.
+
+a_geo_grid: Graphic User Interface
+    Useful to initialize particle positions in qualitative experiment.
+    Give lon, lat, depth and this little tool answer the i,j,k positions.
+    You could record the results in a file and use it in Ariane.
+
+a_scat_all:
+    Submit a_scat_temp, a_scat_salt, a_scat_dens, 
+    a_scat_depth, a_scat_time.
+
+a_scat_temp:
+    Scatter-Plot of the temperature along the trajectory 
+    of particules.
+
+a_scat_salt: qualitative
+    Scatter-Plot of the salinity along the trajectory 
+    of particules.
+
+a_scat_dens:
+    Scatter-Plot of the density along the trajectory 
+    of particules.
+
+a_scat_depth:
+    Scatter-Plot of the depth along the trajectory 
+    of particules.
+
+a_scat_time:
+    Scatter-Plot of the time along the trajectory  
+    of particules.
+
+a_traj:
+    Plot the trajectory of particules.
+    Each trjectory has a color.
+
+a_traj_all:
+   Submit a_traj_temp, a_traj_salt, a_traj_dens, 
+   a_traj_depth, a_traj_time.
+
+a_traj_temp:
+   Plot the temperature along the trajectory of particules.
+
+a_traj_salt:
+   Plot the salinity along the trajectory of particules.
+
+a_traj_dens:
+   Plot the density along the trajectory of particules.
+
+a_traj_depth:
+   Plot the depth along the trajectory of particules.
+
+a_traj_time:
+   Plot the time along the trajectory of particules.
+
+---------------------------------
+Nicolas.Grima@univ-brest.fr 
+April 2008
+
+=========================================
+== http://www.univ-brest.fr/lpo/ariane ==
+=========================================

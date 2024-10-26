@@ -1,0 +1,27 @@
+if n_elements(mt) eq 0 then begin $
+ print,'You need first to read the mesh parameters...' & STOP
+
+!x.tickname=''
+window,9,xsize=1000,ysize=500
+contour,mt,xt,yt,level=.5,title='Click on map for grid information',$
+ subtitle='quit with right/middle button',xrange=[0,0],yrange=[0,0],/nodata,$
+ xticks=0,xtickv=0
+!x.tickname=tickname_x
+@msk
+for j=0,jmt-1 do begin plots,xt(0,j),yt(0,j),psym=3 &$
+ plots,xt(imt-1,j),yt(imt-1,j),psym=3
+for i=0,imt-1 do begin plots,xt(i,0),yt(i,0),psym=3 &$
+ plots,xt(i,jmt-1),yt(i,jmt-1),psym=3
+
+tag=['LAND','OCEAN']
+
+pb=1
+while pb eq 1 do begin cursor,xc,yc,/down & plots,xc,yc,psym=7 &$
+ dist=(xt-xc)^2+(yt-yc)^2 &toto=min(dist,ij) & jj=ij/imt & ii=ij-jj*imt &$
+ plots,xt(ii,jj),yt(ii,jj),psym=1 &$
+ print,'lon=',xc,'lat=',yc,'i=',ii,'j=',jj,tag(mt(ii,jj)),$
+  'model: ',xt(ii,jj),yt(ii,jj),$
+  format='(a4,f6.2,2x,a4,f6.2,4x,a3,i3,2x,a3,i3,4x,a5,4x,a7,f6.2,2x,f6.2)' &$
+ if !mouse.button ge 2 then begin pb=0
+
+wdelete,9

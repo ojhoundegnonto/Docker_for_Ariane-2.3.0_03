@@ -1,0 +1,73 @@
+; directory for meshmask file
+;
+;mesh_dir='/home/70/blanke/TEST_ARIANE/TEST/examples/data/'
+mesh_dir='/Volumes/home70/blanke/TEST_ARIANE/TEST/examples/data/'
+
+; name for meshmask file
+;
+mesh_file='reduc_meshmask.nc'
+
+; directory for Lagrangian experiment
+;
+dir='../quantitative/results'
+
+; periodicity ?
+;
+iperio=0 & jperio=0
+
+; use of IDL mapping ?
+;
+imap=1
+
+; lmt parameter (as defined for Ariane)
+;
+lmt=2
+
+; zoom over region of interest
+;
+range_x=[-60,20]
+range_y=[-25,10]
+range_z=[-5000,0]
+;------------------------------------------------------------------------------
+device,dec=0
+;!p.font=-1 & showfont,17,"toto"
+if n_elements(dir) eq 0 then begin dir='DATA'
+
+loadct,41,file='palette'
+colmin=5 & colmax=!d.table_size-2
+
+psfile='idl'
+!p.charsize=1.5
+!p.charthick=1.5
+!x.style=1 & !y.style=1
+
+xt=ncdf_lec(mesh_file,iodir=mesh_dir,var='xt')
+xu=ncdf_lec(mesh_file,iodir=mesh_dir,var='xu')
+xv=ncdf_lec(mesh_file,iodir=mesh_dir,var='xv')
+xp=ncdf_lec(mesh_file,iodir=mesh_dir,var='xf')
+yt=ncdf_lec(mesh_file,iodir=mesh_dir,var='yt')
+yu=ncdf_lec(mesh_file,iodir=mesh_dir,var='yu')
+yv=ncdf_lec(mesh_file,iodir=mesh_dir,var='yv')
+yp=ncdf_lec(mesh_file,iodir=mesh_dir,var='yf')
+zt=ncdf_lec(mesh_file,iodir=mesh_dir,var='zt')
+zw=ncdf_lec(mesh_file,iodir=mesh_dir,var='zw')
+e1t=ncdf_lec(mesh_file,iodir=mesh_dir,var='e1t')
+e1v=ncdf_lec(mesh_file,iodir=mesh_dir,var='e1v')
+e2t=ncdf_lec(mesh_file,iodir=mesh_dir,var='e2t')
+e2u=ncdf_lec(mesh_file,iodir=mesh_dir,var='e2u')
+e3t=ncdf_lec(mesh_file,iodir=mesh_dir,var='e3t')
+mt3d=ncdf_lec(mesh_file,iodir=mesh_dir,var='mt3d')
+
+s=size(e1t) & imt=fix(s(1)) & jmt=fix(s(2)) &  kmt=fix(s(3))
+
+mt=intarr(imt,jmt)
+mt(*,*)=mt3d(*,*,0)
+
+zt=-zt & zw=-zw
+
+zdil=-1000. ; echelle dilatee au dessus de zdil
+dil=4 ; rapport de dilatation
+
+contour,mt,xt,yt,xtick_get=xxx,/nodata,xrange=range_x,yrange=range_y
+@msk
+

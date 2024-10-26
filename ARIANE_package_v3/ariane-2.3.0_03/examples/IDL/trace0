@@ -1,0 +1,33 @@
+device,dec=0
+if n_elements(dir) eq 0 then begin dir='DATA'
+file=dir+'/traj.ql'
+!p.noclip=0 & !x.style=1 & !y.style=1
+
+file=dir+'/traj.ql'
+toto=READ_ASCII(file) & tab=toto.field1 & toto=0.
+nn=n_elements(tab)/8.
+
+openr,1,file & readf,1,tab & close,1
+
+x=fltarr(nn) & y=x & z=x & t=x & & n=intarr(nn) & tt=x & ss=x & rr=x
+x(*)=tab(1,*) & y(*)=tab(2,*) & z(*)=tab(3,*) & t(*)=tab(4,*) & n(*)=tab(0,*)
+tt(*)=tab(5,*) & ss(*)=tab(6,*) & rr(*)=tab(7,*)
+
+xa=min(x(where(n ne 0))) & xb=max(x(where(n ne 0)))
+ya=min(y(where(n ne 0))) & yb=max(y(where(n ne 0)))
+zmin=min(z(where(n ne 0))) & zmax=max(z(where(n ne 0)))
+tmin=min(t(where(n ne 0))) & tmax=max(t(where(n ne 0)))
+nmin=min(n(where(n ne 0))) & nmax=max(n(where(n ne 0)))
+ttmin=min(tt(where(n ne 0))) & ttmax=max(tt(where(n ne 0)))
+ssmin=min(ss(where(n ne 0))) & ssmax=max(ss(where(n ne 0)))
+rrmin=min(rr(where(n ne 0))) & rrmax=max(rr(where(n ne 0)))
+
+xmin=xa-(xb-xa)/4. & if xmin le min(x) then xmin=min(x)
+ymin=ya-(yb-ya)/4. & if ymin le min(y) then ymin=min(y)
+xmax=xb+(xb-xa)/4. & if xmax ge max(x) then xmax=max(x)
+ymax=yb+(yb-ya)/4. & if ymax ge max(y) then ymax=max(y)
+
+loadct,41,file='palette'
+;loadct,39
+
+minp=1. & maxp=!d.table_size-2. & rgp=maxp-minp
